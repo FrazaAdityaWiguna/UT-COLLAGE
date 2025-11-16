@@ -1,0 +1,3 @@
+1. Buat program Java yang mengurutkan data dari terbesar ke terkecil menggunakan Merge Sort, Tentukan sendiri nilai untuk variabel (misal): a1, a2, a3, a4, a5, a6, a7, a8 (minimal 8 elemen). Kemudian buat analisa kinerja algoritma tersebut menurut anda?  (45 Poin)
+
+2. Buat program Java yang mengurutkan data dari terbesar ke terkecil menggunakan Counting Sort, Tentukan sendiri nilai untuk variabel (misal): a1, a2, a3, a4, a5, a6, a7, a8 minimal 8 elemen). Kemudian buat analisa kinerja algoritma tersebut menurut anda? (40 Poin)
