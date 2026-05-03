@@ -1,0 +1,1 @@
+javac answer1.java && echo "COMPILE OK"
