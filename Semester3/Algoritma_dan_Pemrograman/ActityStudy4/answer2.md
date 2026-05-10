@@ -46,36 +46,36 @@ MULAI
     BACA jamLembur
 
     // --- PROSES: Tentukan Gaji Pokok ---
-    JIKA golongan = "A" MAKA
+    IF golongan = "A" MAKA
         gajiPokok ← 5000000
-    SEBALIKNYA JIKA golongan = "B" MAKA
+    ELSE IF golongan = "B" MAKA
         gajiPokok ← 6500000
-    SEBALIKNYA JIKA golongan = "C" MAKA
+    ELSE IF golongan = "C" MAKA
         gajiPokok ← 9500000
-    SEBALIKNYA
+    ELSE
         TULIS "Golongan tidak valid!"
         KELUAR
-    AKHIR JIKA
+    RETURN
 
     // --- PROSES: Tentukan Persentase & Gaji Lembur ---
-    JIKA jamLembur = 0 MAKA
+    IF jamLembur = 0 MAKA
         gajiLembur ← 0
-    SEBALIKNYA JIKA jamLembur = 1 MAKA
+    ELSE IF jamLembur = 1 MAKA
         persenLembur ← 0.30
         gajiLembur   ← persenLembur × gajiPokok
-    SEBALIKNYA JIKA jamLembur = 2 MAKA
+    ELSE IF jamLembur = 2 MAKA
         persenLembur ← 0.32
         gajiLembur   ← persenLembur × gajiPokok
-    SEBALIKNYA JIKA jamLembur = 3 MAKA
+    ELSE IF jamLembur = 3 MAKA
         persenLembur ← 0.34
         gajiLembur   ← persenLembur × gajiPokok
-    SEBALIKNYA JIKA jamLembur = 4 MAKA
+    ELSE IF jamLembur = 4 MAKA
         persenLembur ← 0.36
         gajiLembur   ← persenLembur × gajiPokok
-    SEBALIKNYA  // jamLembur >= 5
+    ELSE  // jamLembur >= 5
         persenLembur ← 0.38
         gajiLembur   ← persenLembur × gajiPokok
-    AKHIR JIKA
+    RETURN
 
     // --- PROSES: Hitung Total ---
     totalGaji ← gajiPokok + gajiLembur
