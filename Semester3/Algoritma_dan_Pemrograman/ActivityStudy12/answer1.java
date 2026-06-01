@@ -5,7 +5,7 @@ public class answer1 {
         Scanner scanner = new Scanner(System.in);
 
         long[] gaji = {5000000, 6500000, 9500000};
-        int[] persenLembur = {30, 32, 34, 36, 38};
+        int[] persenLembur = {0, 30, 32, 34, 36, 38};
 
         System.out.print("Masukkan Golongan Karyawan (A/B/C): ");
         String golongan = scanner.next().toUpperCase();
@@ -29,16 +29,18 @@ public class answer1 {
         int jamLembur = scanner.nextInt();
 
         int indexLembur;
-        if (jamLembur == 1) {
+        if (jamLembur < 1) {
             indexLembur = 0;
-        } else if (jamLembur == 2) {
+        } else if (jamLembur == 1) {
             indexLembur = 1;
-        } else if (jamLembur == 3) {
+        } else if (jamLembur == 2) {
             indexLembur = 2;
-        } else if (jamLembur == 4) {
+        } else if (jamLembur == 3) {
             indexLembur = 3;
-        } else {
+        } else if (jamLembur == 4) {
             indexLembur = 4;
+        } else {
+            indexLembur = 5;
         }
 
         long gajiLembur = gajiPokok * persenLembur[indexLembur] / 100;
