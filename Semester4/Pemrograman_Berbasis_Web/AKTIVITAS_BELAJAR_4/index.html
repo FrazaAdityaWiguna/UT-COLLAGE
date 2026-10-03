@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GadgetZa - toko online mini untuk gadget dan aksesoris.">
+  <title>Katalog | GadgetZa</title>
+
+  <!-- CSS external -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+
+  <!-- CSS internal: gaya khusus halaman katalog -->
+  <style>
+    .hero-banner {
+      background: linear-gradient(120deg, var(--color-primary), #7c3aed);
+      color: #fff;
+      border-radius: var(--radius);
+      padding: 32px 24px;
+      margin-bottom: 28px;
+    }
+
+    .hero-banner h1 {
+      font-size: clamp(1.6rem, 4vw, 2.3rem);
+    }
+
+    .hero-banner p {
+      margin: 0;
+      opacity: 0.9;
+    }
+
+    .result-info {
+      color: var(--color-muted);
+      font-size: 0.9rem;
+      margin: -8px 0 16px;
+    }
+
+    .detail-icon {
+      font-size: 5rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="https://fraza-portfolio.web.app" target='_blank' rel="noopener noreferrer" class="brand">Gadget<span>Za</span></a>
+      <nav class="main-nav" aria-label="Navigasi utama">
+        <ul>
+          <li><a href="index.html" aria-current="page">🏠 Katalog</a></li>
+          <li><a href="keranjang.html">🛒 Keranjang <span class="cart-badge" id="cart-badge">0</span></a></li>
+          <li><a href="admin.html">⚙️ Admin</a></li>
+          <li><button type="button" class="theme-toggle" id="theme-toggle" aria-label="Ganti tema">🌙</button></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero-banner" aria-labelledby="hero-title">
+      <h1 id="hero-title">Gadget Impian, Harga Bersahabat</h1>
+      <p>Temukan smartphone, laptop, dan aksesoris terbaik. Gratis ongkir untuk belanja di atas Rp1.000.000!</p>
+    </section>
+
+    <section aria-labelledby="katalog-title">
+      <h2 id="katalog-title">Katalog Produk</h2>
+
+      <form class="toolbar" id="filter-form" role="search" onsubmit="return false;">
+        <label for="search-input" class="visually-hidden">Cari produk</label>
+        <input type="search" id="search-input" placeholder="🔍 Cari nama produk...">
+
+        <label for="category-filter" class="visually-hidden">Filter kategori</label>
+        <select id="category-filter">
+          <option value="">Semua Kategori</option>
+        </select>
+
+        <label for="sort-select" class="visually-hidden">Urutkan</label>
+        <select id="sort-select">
+          <option value="default">Urutkan: Terbaru</option>
+          <option value="price-asc">Harga Termurah</option>
+          <option value="price-desc">Harga Termahal</option>
+          <option value="name-asc">Nama A–Z</option>
+        </select>
+      </form>
+
+      <p class="result-info" id="result-info" aria-live="polite"></p>
+
+      <div class="product-grid" id="product-grid"></div>
+    </section>
+  </main>
+
+  <!-- Modal detail produk -->
+  <dialog id="detail-modal" aria-labelledby="detail-title">
+    <div class="modal-header">
+      <h2 id="detail-title">Detail Produk</h2>
+      <button type="button" class="modal-close" data-close aria-label="Tutup">&times;</button>
+    </div>
+    <div class="modal-body" id="detail-body"></div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline" data-close>Tutup</button>
+      <button type="button" class="btn btn-primary" id="detail-add-btn">+ Keranjang</button>
+    </div>
+  </dialog>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year">2026</span> GadgetZa — Tugas Praktik 1 Pemrograman Berbasis Web</p>
+  </footer>
+
+  <script src="js/storage.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/katalog.js"></script>
+</body>
+</html>

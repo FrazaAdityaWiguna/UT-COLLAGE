@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Keranjang belanja dan checkout GadgetZa.">
+  <title>Keranjang | GadgetZa</title>
+
+  <!-- CSS external -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+
+  <!-- CSS internal: layout dua kolom khusus halaman keranjang -->
+  <style>
+    .cart-layout {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin: 6px 0;
+    }
+
+    .summary-total {
+      font-size: 1.2rem;
+      font-weight: 700;
+      border-top: 1px dashed var(--color-border);
+      padding-top: 10px;
+      margin-top: 10px;
+    }
+
+    .order-code {
+      font-family: monospace;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+
+    @media (max-width: 860px) {
+      .cart-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="ihttps://fraza-portfolio.web.app" target='_blank' rel="noopener noreferrer" class="brand">Gadget<span>Za</span></a>
+      <nav class="main-nav" aria-label="Navigasi utama">
+        <ul>
+          <li><a href="index.html">🏠 Katalog</a></li>
+          <li><a href="keranjang.html" aria-current="page">🛒 Keranjang <span class="cart-badge" id="cart-badge">0</span></a></li>
+          <li><a href="admin.html">⚙️ Admin</a></li>
+          <li><button type="button" class="theme-toggle" id="theme-toggle" aria-label="Ganti tema">🌙</button></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <h1>Keranjang Belanja</h1>
+      <p>Periksa pesananmu, lalu isi data pengiriman untuk checkout.</p>
+    </section>
+
+    <div class="cart-layout">
+      <section class="panel" aria-labelledby="cart-title">
+        <h2 id="cart-title" class="visually-hidden">Daftar belanja</h2>
+        <div class="table-wrapper">
+          <table>
+            <caption>Daftar Belanja</caption>
+            <thead>
+              <tr>
+                <th scope="col">Produk</th>
+                <th scope="col">Harga</th>
+                <th scope="col">Jumlah</th>
+                <th scope="col">Subtotal</th>
+                <th scope="col"><span class="visually-hidden">Aksi</span></th>
+              </tr>
+            </thead>
+            <tbody id="cart-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <aside class="panel" aria-labelledby="checkout-title">
+        <h2 id="checkout-title">Checkout</h2>
+
+        <div class="summary">
+          <div class="summary-row"><span>Subtotal</span><span id="summary-subtotal">Rp0</span></div>
+          <div class="summary-row"><span>Ongkos kirim</span><span id="summary-shipping">Rp0</span></div>
+          <div class="summary-row summary-total"><span>Total</span><span id="summary-total">Rp0</span></div>
+        </div>
+
+        <form id="checkout-form" novalidate>
+          <div class="form-group">
+            <label for="nama">Nama Lengkap</label>
+            <input type="text" id="nama" name="nama" placeholder="contoh: Fraza Wiguna" autocomplete="name">
+            <small class="error-msg" id="nama-error"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="nama@email.com" autocomplete="email">
+            <small class="error-msg" id="email-error"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="telepon">Nomor HP</label>
+            <input type="tel" id="telepon" name="telepon" placeholder="08xxxxxxxxxx" autocomplete="tel">
+            <small class="error-msg" id="telepon-error"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="alamat">Alamat Pengiriman</label>
+            <textarea id="alamat" name="alamat" rows="3" placeholder="Jalan, nomor rumah, kota, kode pos" autocomplete="street-address"></textarea>
+            <small class="error-msg" id="alamat-error"></small>
+          </div>
+
+          <fieldset>
+            <legend>Metode Pembayaran</legend>
+            <label class="radio-option"><input type="radio" name="pembayaran" value="Transfer Bank"> 🏦 Transfer Bank</label>
+            <label class="radio-option"><input type="radio" name="pembayaran" value="E-Wallet"> 📲 E-Wallet</label>
+            <label class="radio-option"><input type="radio" name="pembayaran" value="COD"> 💵 Bayar di Tempat (COD)</label>
+          </fieldset>
+          <small class="error-msg" id="pembayaran-error"></small>
+
+          <button type="submit" class="btn btn-primary btn-block" id="checkout-btn">Buat Pesanan</button>
+        </form>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Modal pesanan berhasil -->
+  <dialog id="success-modal" aria-labelledby="success-title">
+    <div class="modal-header">
+      <h2 id="success-title">🎉 Pesanan Berhasil!</h2>
+    </div>
+    <div class="modal-body" id="success-body"></div>
+    <div class="modal-footer">
+      <a href="index.html" class="btn btn-primary">Belanja Lagi</a>
+    </div>
+  </dialog>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year">2026</span> GadgetZa — Tugas Praktik 1 Pemrograman Berbasis Web</p>
+  </footer>
+
+  <script src="js/storage.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/keranjang.js"></script>
+</body>
+</html>

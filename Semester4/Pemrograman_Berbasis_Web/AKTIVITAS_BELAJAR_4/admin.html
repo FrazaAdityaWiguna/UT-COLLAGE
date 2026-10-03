@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Halaman admin GadgetZa untuk mengelola produk dan pesanan.">
+  <title>Admin | GadgetZa</title>
+
+  <!-- CSS external -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+
+  <!-- CSS internal: gaya khusus halaman admin -->
+  <style>
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+    }
+
+    .admin-section {
+      margin-bottom: 32px;
+    }
+
+    .row-actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    .order-items {
+      margin: 0;
+      padding-left: 18px;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="https://fraza-portfolio.web.app" target='_blank' rel="noopener noreferrer" class="brand">Gadget<span>Za</span></a>
+      <nav class="main-nav" aria-label="Navigasi utama">
+        <ul>
+          <li><a href="index.html">🏠 Katalog</a></li>
+          <li><a href="keranjang.html">🛒 Keranjang <span class="cart-badge" id="cart-badge">0</span></a></li>
+          <li><a href="admin.html" aria-current="page">⚙️ Admin</a></li>
+          <li><button type="button" class="theme-toggle" id="theme-toggle" aria-label="Ganti tema">🌙</button></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <h1>Dashboard Admin</h1>
+      <!-- CSS inline: contoh penggunaan atribut style -->
+      <p style="font-style: italic; border-left: 4px solid var(--color-accent); padding-left: 10px;">
+        Kelola produk dan pantau pesanan pelanggan. Data tersimpan di browser (localStorage).
+      </p>
+    </section>
+
+    <section class="stats" aria-label="Ringkasan toko">
+      <article class="panel stat-card">
+        <p class="stat-value" id="stat-products">0</p>
+        <p class="stat-label">Jumlah Produk</p>
+      </article>
+      <article class="panel stat-card">
+        <p class="stat-value" id="stat-orders">0</p>
+        <p class="stat-label">Total Pesanan</p>
+      </article>
+      <article class="panel stat-card">
+        <p class="stat-value" id="stat-revenue">Rp0</p>
+        <p class="stat-label">Pendapatan (selesai)</p>
+      </article>
+      <article class="panel stat-card">
+        <p class="stat-value" id="stat-low-stock">0</p>
+        <p class="stat-label">Stok Menipis (&le; 5)</p>
+      </article>
+    </section>
+
+    <section class="panel admin-section" aria-labelledby="products-title">
+      <div class="section-head">
+        <h2 id="products-title">Data Produk</h2>
+        <div class="row-actions">
+          <button type="button" class="btn btn-outline" id="reset-btn">↺ Reset Data</button>
+          <button type="button" class="btn btn-primary" id="add-product-btn">+ Tambah Produk</button>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <label for="product-search" class="visually-hidden">Cari produk</label>
+        <input type="search" id="product-search" placeholder="🔍 Cari nama atau kategori...">
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Produk</th>
+              <th scope="col">Kategori</th>
+              <th scope="col">Harga</th>
+              <th scope="col">Stok</th>
+              <th scope="col">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="product-table-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel admin-section" aria-labelledby="orders-title">
+      <div class="section-head">
+        <h2 id="orders-title">Daftar Pesanan</h2>
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Kode</th>
+              <th scope="col">Tanggal</th>
+              <th scope="col">Pelanggan</th>
+              <th scope="col">Item</th>
+              <th scope="col">Total</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody id="order-table-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal form tambah / edit produk -->
+  <dialog id="product-modal" aria-labelledby="product-modal-title">
+    <form id="product-form" novalidate>
+      <div class="modal-header">
+        <h2 id="product-modal-title">Tambah Produk</h2>
+        <button type="button" class="modal-close" data-close aria-label="Tutup">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <input type="hidden" name="id">
+
+        <div class="form-group">
+          <label for="product-name">Nama Produk</label>
+          <input type="text" id="product-name" name="name" placeholder="contoh: Powerbank 10000 mAh">
+          <small class="error-msg" id="name-error"></small>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="product-category">Kategori</label>
+            <select id="product-category" name="category">
+              <option value="">-- Pilih --</option>
+              <option>Smartphone</option>
+              <option>Laptop</option>
+              <option>Audio</option>
+              <option>Wearable</option>
+              <option>Aksesoris</option>
+              <option>Kamera</option>
+            </select>
+            <small class="error-msg" id="category-error"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="product-icon">Ikon (emoji)</label>
+            <input type="text" id="product-icon" name="icon" placeholder="📦" maxlength="4">
+            <small class="error-msg" id="icon-error"></small>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="product-price">Harga (Rp)</label>
+            <input type="number" id="product-price" name="price" min="1000" step="500" placeholder="150000">
+            <small class="error-msg" id="price-error"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="product-stock">Stok</label>
+            <input type="number" id="product-stock" name="stock" min="0" step="1" placeholder="10">
+            <small class="error-msg" id="stock-error"></small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="product-description">Deskripsi</label>
+          <textarea id="product-description" name="description" rows="3" placeholder="Keterangan singkat produk"></textarea>
+          <small class="error-msg" id="description-error"></small>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" data-close>Batal</button>
+        <button type="submit" class="btn btn-primary">Simpan</button>
+      </div>
+    </form>
+  </dialog>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year">2026</span> GadgetZa — Tugas Praktik 1 Pemrograman Berbasis Web</p>
+  </footer>
+
+  <script src="js/storage.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
