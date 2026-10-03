@@ -1,0 +1,34 @@
+'data.frame':	50 obs. of  3 variables:
+ $ No       : int  1 2 3 4 5 6 7 8 9 10 ...
+ $ Kecepatan: num  4 4 7 7 8 8 9 10 10 11 ...
+ $ Jarak    : num  2 10 4 20 17 13 18 28 33 18 ...
+  No Kecepatan Jarak
+1  1         4     2
+2  2         4    10
+3  3         7     4
+4  4         7    20
+5  5         8    17
+6  6         8    13
+1a. Rata-rata kecepatan mobil   : 15.5 km/h
+1b. Rata-rata jarak tempuh      : 42.28 meter
+1c. Standar deviasi jarak       : 24.7651 meter
+null device 
+          1 
+Koefisien korelasi (r)          : 0.8384 
+(Intercept)   Kecepatan 
+ -17.534593    3.859006 
+null device 
+          1 
+     Kelas Frekuensi
+1   (0, 5]         2
+2  (5, 10]         7
+3 (10, 15]        16
+4 (15, 20]        17
+5 (20, 25]         8
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   4.00   12.00   15.50   15.50   19.75   25.00 
+Median kecepatan                : 15.5 
+KK Matematika                   : 13.33 %
+KK Bahasa Inggris               : 11.43 %
+Z Matematika                    : 0.5 
+Z Bahasa Inggris                : 0.625 
